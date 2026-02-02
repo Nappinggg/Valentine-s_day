@@ -74,3 +74,8 @@ btnYes.addEventListener('click', () => {
     alert("Ура! Далі буде друга сторінка...");
 });
 
+// 4. Клік по "Ні"
+btnNo.addEventListener('click', () => {
+    alert("хохли в край паахуевалі");
+});
+
