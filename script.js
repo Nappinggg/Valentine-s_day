@@ -67,27 +67,34 @@ btnNo.addEventListener('mouseover', (e) => {
     btnNo.style.top = `${newTop}px`;
 });
 // --- ВИПРАВЛЕННЯ ДЛЯ ТЕЛЕФОНУ ---
-btnNo.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Забороняє зум, скрол і клік
+const teleportButton = (e) => {
+    e.preventDefault(); // Забороняє зум, скрол і подвійні кліки
     
-    // Робимо кнопку fixed, якщо вона ще не така
+    // Якщо кнопка ще не "відірвалась" від картки — робимо fixed
     if (btnNo.style.position !== 'fixed') {
         btnNo.style.position = 'fixed';
+        btnNo.style.zIndex = '1000'; // Щоб була зверху
     }
 
-    // Випадкові координати
+    // Рахуємо межі, куди можна стрибнути
     const maxWidth = window.innerWidth - btnNo.offsetWidth - 20;
     const maxHeight = window.innerHeight - btnNo.offsetHeight - 20;
     
-    const newX = Math.random() * maxWidth + 10;
-    const newY = Math.random() * maxHeight + 10;
+    // Нові випадкові координати (від 20px до максимуму)
+    const newX = Math.random() * (maxWidth - 20) + 20;
+    const newY = Math.random() * (maxHeight - 20) + 20;
 
     btnNo.style.left = `${newX}px`;
     btnNo.style.top = `${newY}px`;
-}, { passive: false }); // passive: false - це КЛЮЧ ДО УСПІХУ
+};
 
+// Чіпляємо на ВСІ можливі дії з пальцем
+btnNo.addEventListener('touchstart', teleportButton, { passive: false });
+btnNo.addEventListener('touchmove', teleportButton, { passive: false }); // Додали це
+btnNo.addEventListener('touchend', teleportButton, { passive: false });  // І це про всяк випадок
 // Клік по "Так"
 btnYes.addEventListener('click', () => {
    alert("Ура! Далі буде друга сторінка...");
 });
+
 
