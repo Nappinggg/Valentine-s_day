@@ -25,8 +25,21 @@ if (window.matchMedia("(hover: hover)").matches) {
 
 // --- 2. КНОПКА "НІ" (Дві різні логіки) ---
 
-// А) ЛОГІКА ДЛЯ ПК (Розумна втеча від курсора)
+
+// Змінна, щоб знати, чи це телефон
+let isTouchDevice = false;
+
+// Слухаємо перший дотик, щоб зрозуміти, що це телефон
+window.addEventListener('touchstart', () => {
+    isTouchDevice = true;
+});
+
+
+// А) ЛОГІКА ДЛЯ ПК (Працює ТІЛЬКИ якщо це не телефон)
 btnNo.addEventListener('mouseover', (e) => {
+    // ЯКЩО ЦЕ ТЕЛЕФОН — НІЧОГО НЕ РОБИМО
+    if (isTouchDevice) return;
+
     btnNo.style.position = 'fixed'; 
     btnNo.style.zIndex = '1000';
 
@@ -59,13 +72,12 @@ btnNo.addEventListener('mouseover', (e) => {
 });
 
 
-// Б) ЛОГІКА ДЛЯ ТЕЛЕФОНУ (Простий телепорт при натисканні)
-const jumpOnTouch = (e) => {
-    e.preventDefault(); // Щоб не клікнулось
+// Б) ЛОГІКА ДЛЯ ТЕЛЕФОНУ (Простий телепорт)
+btnNo.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Блокуємо, щоб не викликався mouseover
     
     btnNo.style.position = 'fixed';
     
-    // Просто кидаємо в рандомне місце
     const maxX = window.innerWidth - btnNo.offsetWidth - 20;
     const maxY = window.innerHeight - btnNo.offsetHeight - 20;
     
@@ -74,12 +86,4 @@ const jumpOnTouch = (e) => {
     
     btnNo.style.left = `${randomX}px`;
     btnNo.style.top = `${randomY}px`;
-};
-
-// Чіпляємо тільки на touchstart (перший дотик)
-btnNo.addEventListener('touchstart', jumpOnTouch, { passive: false });
-
-// Клік по "Так"
-btnYes.addEventListener('click', () => {
-    alert("Ура! Далі буде друга сторінка...");
-});
+}, { passive: false });
