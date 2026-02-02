@@ -66,31 +66,25 @@ btnNo.addEventListener('mouseover', (e) => {
     btnNo.style.left = `${newLeft}px`;
     btnNo.style.top = `${newTop}px`;
 });
-// --- ДОДАТОК ДЛЯ ТЕЛЕФОНУ (Touch Fix) ---
-// Ця функція просто кидає кнопку в рандомне місце (бо "тікати" від пальця складно)
-const jumpAround = (e) => {
-    // Ці рядки вбивають будь-які спроби натиснути кнопку
-    e.preventDefault(); 
-    e.stopPropagation();
-
-    // Робимо кнопку "летючою"
-    btnNo.style.position = 'fixed';
+// --- ВИПРАВЛЕННЯ ДЛЯ ТЕЛЕФОНУ ---
+btnNo.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Забороняє зум, скрол і клік
     
-    // Генеруємо випадкові координати (з відступом 20px від країв)
-    const maxX = window.innerWidth - btnNo.offsetWidth - 20;
-    const maxY = window.innerHeight - btnNo.offsetHeight - 20;
+    // Робимо кнопку fixed, якщо вона ще не така
+    if (btnNo.style.position !== 'fixed') {
+        btnNo.style.position = 'fixed';
+    }
+
+    // Випадкові координати
+    const maxWidth = window.innerWidth - btnNo.offsetWidth - 20;
+    const maxHeight = window.innerHeight - btnNo.offsetHeight - 20;
     
-    const randomX = Math.random() * (maxX - 20) + 20;
-    const randomY = Math.random() * (maxY - 20) + 20;
+    const newX = Math.random() * maxWidth + 10;
+    const newY = Math.random() * maxHeight + 10;
 
-    btnNo.style.left = `${randomX}px`;
-    btnNo.style.top = `${randomY}px`;
-};
-
-// Чіпляємо цю функцію на всі можливі дотики
-btnNo.addEventListener('touchstart', jumpAround, { passive: false });
-btnNo.addEventListener('touchend', jumpAround, { passive: false });
-
+    btnNo.style.left = `${newX}px`;
+    btnNo.style.top = `${newY}px`;
+}, { passive: false }); // passive: false - це КЛЮЧ ДО УСПІХУ
 
 // Клік по "Так"
 btnYes.addEventListener('click', () => {
