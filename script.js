@@ -1,7 +1,7 @@
 const btnYes = document.getElementById('btn-yes');
 const btnNo = document.getElementById('btn-no');
 
-// --- 1. КНОПКА "ТАК" (Збільшення на ПК) ---
+// 1. КНОПКА "ТАК" (Тільки для ПК - збільшення)
 if (window.matchMedia("(hover: hover)").matches) {
     document.addEventListener('mousemove', (e) => {
         const x = e.clientX;
@@ -10,7 +10,6 @@ if (window.matchMedia("(hover: hover)").matches) {
         const btnX = btnRect.left + btnRect.width / 2;
         const btnY = btnRect.top + btnRect.height / 2;
         const distance = Math.sqrt(Math.pow(x - btnX, 2) + Math.pow(y - btnY, 2));
-
         const maxDistance = 300; 
         const maxScale = 1.7;    
 
@@ -23,91 +22,55 @@ if (window.matchMedia("(hover: hover)").matches) {
     });
 }
 
-// --- 2. КНОПКА "НІ" (Дві різні логіки) ---
+// 2. КНОПКА "НІ"
 
-
-// Змінна, щоб знати, чи це телефон
-let isTouchDevice = false;
-
-// Слухаємо перший дотик, щоб зрозуміти, що це телефон
-window.addEventListener('touchstart', () => {
-    isTouchDevice = true;
-});
-
-
-// А) ЛОГІКА ДЛЯ ПК (Працює ТІЛЬКИ якщо це не телефон)
+// Логіка для ПК (Втеча від курсора)
 btnNo.addEventListener('mouseover', (e) => {
-    // ЯКЩО ЦЕ ТЕЛЕФОН — НІЧОГО НЕ РОБИМО
-    if (isTouchDevice) return;
+    // Якщо це телефон - ігноруємо mouseover (щоб не було подвійних стрибків)
+    if (window.innerWidth < 768) return; 
 
     btnNo.style.position = 'fixed'; 
-    btnNo.style.zIndex = '1000';
-
     const escapeDistance = 150;
     const rect = btnNo.getBoundingClientRect();
-    
     let deltaX = (rect.left + rect.width / 2) - e.clientX;
     let deltaY = (rect.top + rect.height / 2) - e.clientY;
-
     if (deltaX === 0 && deltaY === 0) { deltaX = 1; deltaY = 1; }
-
     const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    deltaX /= length;
-    deltaY /= length;
+    let newLeft = rect.left + (deltaX / length) * escapeDistance;
+    let newTop = rect.top + (deltaY / length) * escapeDistance;
 
-    let newLeft = rect.left + deltaX * escapeDistance;
-    let newTop = rect.top + deltaY * escapeDistance;
-
+    // Обмеження екрану
     if (newLeft < 20) newLeft = 20;
-    if (newLeft + rect.width > window.innerWidth - 20) {
-        newLeft = window.innerWidth - rect.width - 20;
-    }
+    if (newLeft + rect.width > window.innerWidth - 20) newLeft = window.innerWidth - rect.width - 20;
     if (newTop < 20) newTop = 20;
-    if (newTop + rect.height > window.innerHeight - 20) {
-        newTop = window.innerHeight - rect.height - 20;
-    }
-
+    if (newTop + rect.height > window.innerHeight - 20) newTop = window.innerHeight - rect.height - 20;
+    
     btnNo.style.left = `${newLeft}px`;
     btnNo.style.top = `${newTop}px`;
 });
 
 
-// Б) ЛОГІКА ДЛЯ ТЕЛЕФОНУ (Простий телепорт)
-// Б) ЛОГІКА ДЛЯ ТЕЛЕФОНУ (З таймером, щоб не трясло)
-let isAnimating = false; // Прапорець "чи ми зараз стрибаємо?"
-
-const jumpMobile = (e) => {
-    e.preventDefault(); // Завжди блокуємо стандартні дії
+// Логіка для ТЕЛЕФОНУ (Стрибок при спробі натиснути)
+const teleport = (e) => {
+    e.preventDefault(); // Не даємо натиснути кнопку
     
-    // Якщо кнопка нещодавно стрибнула — ігноруємо нові рухи
-    if (isAnimating) return;
-
-    // Ставимо прапорець: "Зараз стрибаю, не чіпай мене"
-    isAnimating = true;
-
     btnNo.style.position = 'fixed';
     
+    // Генеруємо випадкові координати
     const maxX = window.innerWidth - btnNo.offsetWidth - 20;
     const maxY = window.innerHeight - btnNo.offsetHeight - 20;
-    
     const randomX = Math.random() * (maxX - 20) + 20;
     const randomY = Math.random() * (maxY - 20) + 20;
     
     btnNo.style.left = `${randomX}px`;
     btnNo.style.top = `${randomY}px`;
-
-    // Через 300мс знімаємо блокування, можна стрибати знову
-    setTimeout(() => {
-        isAnimating = false;
-    }, 300);
 };
 
-// Слухаємо і дотик, і рух пальця
-btnNo.addEventListener('touchstart', jumpMobile, { passive: false });
-btnNo.addEventListener('touchmove', jumpMobile, { passive: false });
+// Використовуємо 'touchstart' - це спрацьовує миттєво при дотику пальцем
+btnNo.addEventListener('touchstart', teleport, { passive: false });
 
-    
-    btnNo.style.left = `${randomX}px`;
-    btnNo.style.top = `${randomY}px`;
-}, { passive: false });
 
+// 3. Клік по "Так"
+btnYes.addEventListener('click', () => {
+    alert("Ура! Далі буде друга сторінка...");
+});
