@@ -50,27 +50,27 @@ btnNo.addEventListener('mouseover', (e) => {
 });
 
 
-// Логіка для ТЕЛЕФОНУ (Стрибок при спробі натиснути)
-const teleport = (e) => {
-    e.preventDefault(); // Не даємо натиснути кнопку
+// Логіка для ТЕЛЕФОНУ (Стрибок при кліку)
+btnNo.addEventListener('click', (e) => {
+    e.preventDefault(); // Забороняємо натискання
     
+    // Якщо це ПК і вікно широке - виходимо, бо спрацює mouseover
+    if (window.innerWidth >= 768) return; 
+
     btnNo.style.position = 'fixed';
     
-    // Генеруємо випадкові координати
     const maxX = window.innerWidth - btnNo.offsetWidth - 20;
     const maxY = window.innerHeight - btnNo.offsetHeight - 20;
+    
     const randomX = Math.random() * (maxX - 20) + 20;
     const randomY = Math.random() * (maxY - 20) + 20;
     
     btnNo.style.left = `${randomX}px`;
     btnNo.style.top = `${randomY}px`;
-};
-
-// Використовуємо 'touchstart' - це спрацьовує миттєво при дотику пальцем
-btnNo.addEventListener('touchstart', teleport, { passive: false });
-
+});
 
 // 3. Клік по "Так"
 btnYes.addEventListener('click', () => {
     alert("Ура! Далі буде друга сторінка...");
 });
+
