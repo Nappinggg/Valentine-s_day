@@ -1,3 +1,9 @@
+/* Це критично важливо для iOS: вимикає зайві жести */
+html, body {
+    touch-action: manipulation;
+}
+
+
 body {
     margin: 0;
     height: 100vh;
@@ -89,3 +95,4 @@ button {
     50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 77, 109, 0.6); }
     100% { transform: scale(1); }
 }
+
