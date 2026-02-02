@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffc0cb; /* Рожевий фон */
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden; /* Щоб кнопка "Ні" не розтягувала сторінку, коли тікає */
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 90%;
+    width: 320px;
+    position: relative;
+    z-index: 10;
+}
+
+.heart-img {
+    width: 200px; /* Ширина картинки */
+    height: auto; /* Висота підлаштується сама */
+    margin-bottom: 20px; /* Відступ знизу до тексту */
+    
+    /* Додамо легку анімацію "биття", щоб було живіше */
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.1); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.1); }
+    60% { transform: scale(1); }
+}
+
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    min-height: 60px; /* Резервуємо місце, щоб не стрибало */
+    align-items: center;
+    position: relative;
+}
+
+button {
+    padding: 12px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    transition: all 0.1s ease; /* Дуже швидка анімація для плавності росту */
+}
+
+/* Стиль кнопки ТАК */
+#btn-yes {
+    background-color: #ff4d6d;
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+    position: absolute;
+    right: 52%;
+}
+
+/* Стиль кнопки НІ */
+#btn-no {
+    background-color: #e0e0e0;
+    color: #555;
+    position: absolute; 
+    left: 52%;
+}
+
+/* === ЛОГІКА ДЛЯ ТЕЛЕФОНІВ (Touch) === */
+@media (hover: none) {
+    /* На телефонах кнопка пульсує сама по собі */
+    #btn-yes {
+        animation: pulse 1.5s infinite;
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 77, 109, 0.6); }
+    100% { transform: scale(1); }
+}
