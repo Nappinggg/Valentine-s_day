@@ -73,9 +73,18 @@ btnNo.addEventListener('mouseover', (e) => {
 
 
 // Б) ЛОГІКА ДЛЯ ТЕЛЕФОНУ (Простий телепорт)
-btnNo.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Блокуємо, щоб не викликався mouseover
+// Б) ЛОГІКА ДЛЯ ТЕЛЕФОНУ (З таймером, щоб не трясло)
+let isAnimating = false; // Прапорець "чи ми зараз стрибаємо?"
+
+const jumpMobile = (e) => {
+    e.preventDefault(); // Завжди блокуємо стандартні дії
     
+    // Якщо кнопка нещодавно стрибнула — ігноруємо нові рухи
+    if (isAnimating) return;
+
+    // Ставимо прапорець: "Зараз стрибаю, не чіпай мене"
+    isAnimating = true;
+
     btnNo.style.position = 'fixed';
     
     const maxX = window.innerWidth - btnNo.offsetWidth - 20;
@@ -86,4 +95,19 @@ btnNo.addEventListener('touchstart', (e) => {
     
     btnNo.style.left = `${randomX}px`;
     btnNo.style.top = `${randomY}px`;
+
+    // Через 300мс знімаємо блокування, можна стрибати знову
+    setTimeout(() => {
+        isAnimating = false;
+    }, 300);
+};
+
+// Слухаємо і дотик, і рух пальця
+btnNo.addEventListener('touchstart', jumpMobile, { passive: false });
+btnNo.addEventListener('touchmove', jumpMobile, { passive: false });
+
+    
+    btnNo.style.left = `${randomX}px`;
+    btnNo.style.top = `${randomY}px`;
 }, { passive: false });
+
