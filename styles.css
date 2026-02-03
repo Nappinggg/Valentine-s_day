@@ -10,21 +10,20 @@ body {
     overflow: hidden; 
 }
 
-/* КАРТКА */
+/* КАРТКА (Головний контейнер) */
 .card {
     background: white;
-    padding: 30px; /* Трохи менше відступів, щоб влізло більше */
+    padding: 30px; 
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     text-align: center;
-    width: 450px;       /* Розширили! Було 320px */
-    max-width: 90%;     /* На мобілці займе 90% екрану */
+    width: 450px;       /* Розширили, щоб влізли книги */
+    max-width: 90%;     /* Адаптив під телефон */
     position: relative;
     z-index: 10;
-    /* max-height прибираємо, щоб скрол не з'являвся без потреби */
 }
 
-/* СЕРЦЕ */
+/* СЕРЦЕ (На першій сторінці) */
 .heart-img {
     width: 150px;
     height: auto;
@@ -76,7 +75,7 @@ button {
     left: 55%;
 }
 
-/* ГІФКА */
+/* ГІФКА (На другій сторінці) */
 .gif-img {
     width: 100%;
     border-radius: 15px;
@@ -88,12 +87,12 @@ button {
     display: none !important;
 }
 
-/* --- СТИЛІ ДЛЯ КНИГ (БІБЛІОТЕКА) --- */
+/* --- СТИЛІ ДЛЯ ПОЛИЦІ З КНИГАМИ --- */
 .bookshelf {
     display: flex;
     justify-content: center;
-    gap: 30px;           /* Збільшили відстань між книгами (було 15) */
-    margin-top: 40px;    /* Трохи опустили полицю вниз */
+    gap: 30px;           /* Відстань між книгами */
+    margin-top: 40px;    /* Відступ зверху */
 }
 
 .book-container {
@@ -103,33 +102,31 @@ button {
 }
 
 .book-container:hover {
-    transform: translateY(-10px); /* Сильніший стрибок при наведенні */
+    transform: translateY(-10px); /* Ефект підскакування */
 }
 
 .book-container p {
-    font-size: 1rem;     /* Текст став більшим (був 0.8rem) */
+    font-size: 1rem;     
     font-weight: bold;
-    margin-top: 15px;    /* Відступ від книги до тексту */
+    margin-top: 15px;
     color: #555;
 }
 
-
-/* Робимо книги великими і соковитими */
-/* Базовий стиль книги */
+/* --- САМІ КНИГИ --- */
 .book {
     width: 70px;
     height: 100px;
-    border-radius: 5px 10px 10px 5px; /* Закруглення */
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.2); /* Тінь */
+    border-radius: 5px 10px 10px 5px; /* Форма книги */
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    font-size: 30px; /* Розмір іконки */
     position: relative;
-    color: white; /* Іконка біла */
+    color: white; /* Колір іконки */
 }
 
-/* Біла смужка "сторінок" збоку */
+/* Сторінки збоку (біла смужка) */
 .book::after {
     content: '';
     position: absolute;
@@ -137,15 +134,14 @@ button {
     right: 0;
     width: 12px;
     height: 90px;
-    background: rgba(255,255,255,0.8); /* Напівпрозора смужка */
+    background: rgba(255,255,255,0.8);
     border-radius: 2px;
 }
 
-/* ВАЖЛИВО: КОЛЬОРИ КНИГ */
-/* Переконайся, що в HTML у тебе є класи book-red, book-blue... */
+/* Кольори книг (важливі !) */
 .book-red { background-color: #ff6b6b !important; }
 .book-blue { background-color: #4ecdc4 !important; }
-.book-green { background-color: #ffe66d !important; color: #555 !important; }
+.book-green { background-color: #ffe66d !important; color: #555 !important; } /* Жовта книга, іконка темна */
 
 
 /* --- ВІДКРИТА СТОРІНКА (ПОВНИЙ ЕКРАН) --- */
@@ -155,7 +151,7 @@ button {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #fff0f5;
+    background: #fff0f5; /* Світло-рожевий */
     z-index: 2000;
     padding: 20px;
     box-sizing: border-box;
@@ -173,6 +169,8 @@ button {
     padding: 8px 20px;
     font-size: 1rem;
     margin-bottom: 20px;
+    cursor: pointer;
+    border-radius: 20px;
 }
 
 /* --- КУПОН --- */
@@ -201,6 +199,5 @@ button {
     border: none;
     cursor: pointer;
     font-size: 1rem;
+    border-radius: 5px;
 }
-
-
