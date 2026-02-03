@@ -2,31 +2,105 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-
-
-
-    <title>Важливе питання для Улі❤️</title>
-    <!-- Підключаємо гарний шрифт -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Для Уляшечки ❤️</title>
+    
+    <!-- Шрифти -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Бібліотека для салюту -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-    <div class="card">
-        <img src="assets/heart_fire.png" alt="heart" class="heart-img">
+    <!-- СТОРІНКА 1: ПИТАННЯ -->
+    <div class="card" id="page1">
+        <img src="assets/heart.png" alt="heart" class="heart-img">
         <h1>Уляшечка, ти будеш моєю Валентинкою?</h1>
         
         <div class="buttons">
             <button id="btn-yes">Тааак!!!</button>
-            <button id="btn-no">Нєєєєє</button>
+            <button id="btn-no">Нє</button>
+        </div>
+    </div>
+
+    <!-- СТОРІНКА 2: БІБЛІОТЕКА (Спочатку схована) -->
+    <div class="card hidden" id="page2">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3RxeXF3YXF6a2o1b3RxeXF3YXF6a2o1b3RxeXF3YXF6a2o1/26BRv0ThflsKCqLXG/giphy.gif" alt="hugs" class="gif-img">
+        
+        <h1>Ура! Я найщасливіший! ❤️</h1>
+        <p class="message">Я тебе кохаю! <br> Вибери одну з книг:</p>
+
+        <!-- Полиця з книгами -->
+        <div class="bookshelf">
+            <!-- Книга 1 -->
+            <div class="book-container" onclick="openBook(1)">
+                <div class="book book-red">
+                    <div class="cover">📸</div>
+                </div>
+                <p>Спогади</p>
+            </div>
+
+            <!-- Книга 2 -->
+            <div class="book-container" onclick="openBook(2)">
+                <div class="book book-blue">
+                    <div class="cover">💌</div>
+                </div>
+                <p>Чому я люблю</p>
+            </div>
+
+            <!-- Книга 3 (Купон) -->
+            <div class="book-container" onclick="openBook(3)">
+                <div class="book book-green">
+                    <div class="cover">🎟</div>
+                </div>
+                <p>Твій купон</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВМІСТ КНИГ (Схований) -->
+
+    <!-- Книга 1: Спогади -->
+    <div id="book-content-1" class="fullscreen-page hidden">
+        <button class="close-btn" onclick="closeBook(1)">✖ Назад</button>
+        <h1>Наші найкращі моменти</h1>
+        <p>Тут мають бути наші фото...</p>
+        <!-- Сюди потім вставиш <img> теги з фотками -->
+    </div>
+
+    <!-- Книга 2: Лист -->
+    <div id="book-content-2" class="fullscreen-page hidden">
+        <button class="close-btn" onclick="closeBook(2)">✖ Назад</button>
+        <h1>Чому я тебе люблю</h1>
+        <p class="letter-text">
+            Ти найкраще, що сталося в моєму житті. <br>
+            Твоя усмішка змушує мене радіти кожному дню. <br>
+            Дякую, що ти є! ❤️
+        </p>
+    </div>
+
+    <!-- Книга 3: Купон -->
+    <div id="book-content-3" class="fullscreen-page hidden">
+        <button class="close-btn" onclick="closeBook(3)">✖ Назад</button>
+        <h1>🎁 Твій особливий подарунок</h1>
+        
+        <div class="coupon-card">
+            <div class="coupon-header">
+                <h2>СЕРТИФІКАТ</h2>
+            </div>
+            <div class="coupon-body">
+                <p>Дійсний на:</p>
+                <h3>ОДНЕ БУДЬ-ЯКЕ БАЖАННЯ 🧞‍♂️</h3>
+                <p class="small-text">(Масаж, смаколики, кіно, або щось інше...)</p>
+            </div>
+            <div class="coupon-footer">
+                <button id="activate-btn" onclick="activateCoupon()">✅ АКТИВУВАТИ ЗАРАЗ</button>
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
