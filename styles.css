@@ -1,14 +1,18 @@
 /* БАЗОВІ НАЛАШТУВАННЯ */
 body {
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;           /* було height */
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffc0cb; /* Рожевий фон */
+    background-color: #ffc0cb;
     font-family: 'Montserrat', sans-serif;
-    overflow: hidden; 
+    overflow-x: hidden;
+    overflow-y: auto;            /* важливо: якщо не влазить — можна скролити */
+    padding: 18px 12px;          /* щоб на телефонах не прилипало до країв */
+    box-sizing: border-box;
 }
+
 
 /* КАРТКА (Головний контейнер) */
 .card {
@@ -332,4 +336,5 @@ button {
     margin-top: 10px;
   }
 }
+
 
