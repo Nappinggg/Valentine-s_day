@@ -274,3 +274,62 @@ button {
     color: #555 !important;
 }
 
+/* ===== Mobile tweaks ===== */
+@media (max-width: 520px) {
+
+  body {
+    align-items: flex-start;   /* щоб картка не впиралась в низ */
+    padding: 18px 12px;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .gif-img {
+    width: 210px;            /* щоб гіфка була компактна */
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 26px;
+    line-height: 1.15;
+    margin: 10px 0 8px;
+  }
+
+  .bookshelf {
+    gap: 14px;               /* менший gap */
+    margin-top: 22px;
+    flex-wrap: wrap;         /* ГОЛОВНЕ: тепер вони можуть переноситись */
+  }
+
+  .book {
+    width: 86px;             /* менші книги */
+    height: 122px;
+  }
+
+  .book::before {
+    width: 12px;
+  }
+
+  .book::after {
+    right: -5px;
+    width: 7px;
+  }
+
+  .book-title {
+    font-size: 13px;         /* щоб текст влазив */
+    letter-spacing: 0.5px;
+  }
+
+  .book-container p {
+    font-size: 0.95rem;
+    margin-top: 10px;
+  }
+}
+
