@@ -201,3 +201,17 @@ button {
     font-size: 1rem;
     border-radius: 5px;
 }
+/* Жорстке фарбування книг по порядку */
+.bookshelf .book-container:nth-child(1) .book {
+    background-color: #ff6b6b !important;
+}
+
+.bookshelf .book-container:nth-child(2) .book {
+    background-color: #4ecdc4 !important;
+}
+
+.bookshelf .book-container:nth-child(3) .book {
+    background-color: #ffe66d !important;
+    color: #555 !important;
+}
+
