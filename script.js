@@ -1,7 +1,7 @@
 const btnYes = document.getElementById('btn-yes');
 const btnNo = document.getElementById('btn-no');
 
-// 1. КНОПКА "ТАК" (Тільки для ПК - збільшення)
+// --- 1. КНОПКА "ТАК" (Збільшення на ПК) ---
 if (window.matchMedia("(hover: hover)").matches) {
     document.addEventListener('mousemove', (e) => {
         const x = e.clientX;
@@ -10,11 +10,9 @@ if (window.matchMedia("(hover: hover)").matches) {
         const btnX = btnRect.left + btnRect.width / 2;
         const btnY = btnRect.top + btnRect.height / 2;
         const distance = Math.sqrt(Math.pow(x - btnX, 2) + Math.pow(y - btnY, 2));
-        const maxDistance = 300; 
-        const maxScale = 1.7;    
 
-        if (distance < maxDistance) {
-            const scale = 1 + ((maxDistance - distance) / maxDistance) * (maxScale - 1);
+        if (distance < 300) {
+            const scale = 1 + ((300 - distance) / 300) * (0.7);
             btnYes.style.transform = `scale(${scale})`;
         } else {
             btnYes.style.transform = 'scale(1)';
@@ -22,60 +20,73 @@ if (window.matchMedia("(hover: hover)").matches) {
     });
 }
 
-// 2. КНОПКА "НІ"
+// --- 2. КНОПКА "НІ" (ТІКАЄ) ---
 
-// Логіка для ПК (Втеча від курсора)
-btnNo.addEventListener('mouseover', (e) => {
-    // Якщо це телефон - ігноруємо mouseover (щоб не було подвійних стрибків)
-    if (window.innerWidth < 768) return; 
-
-    btnNo.style.position = 'fixed'; 
-    const escapeDistance = 150;
-    const rect = btnNo.getBoundingClientRect();
-    let deltaX = (rect.left + rect.width / 2) - e.clientX;
-    let deltaY = (rect.top + rect.height / 2) - e.clientY;
-    if (deltaX === 0 && deltaY === 0) { deltaX = 1; deltaY = 1; }
-    const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    let newLeft = rect.left + (deltaX / length) * escapeDistance;
-    let newTop = rect.top + (deltaY / length) * escapeDistance;
-
-    // Обмеження екрану
-    if (newLeft < 20) newLeft = 20;
-    if (newLeft + rect.width > window.innerWidth - 20) newLeft = window.innerWidth - rect.width - 20;
-    if (newTop < 20) newTop = 20;
-    if (newTop + rect.height > window.innerHeight - 20) newTop = window.innerHeight - rect.height - 20;
-    
-    btnNo.style.left = `${newLeft}px`;
-    btnNo.style.top = `${newTop}px`;
-});
-
-
-// Логіка для ТЕЛЕФОНУ (Стрибок при кліку)
-btnNo.addEventListener('click', (e) => {
-    e.preventDefault(); // Забороняємо натискання
-    
-    // Якщо це ПК і вікно широке - виходимо, бо спрацює mouseover
-    if (window.innerWidth >= 768) return; 
-
+// Функція переміщення
+function moveBtn() {
     btnNo.style.position = 'fixed';
-    
     const maxX = window.innerWidth - btnNo.offsetWidth - 20;
     const maxY = window.innerHeight - btnNo.offsetHeight - 20;
-    
-    const randomX = Math.random() * (maxX - 20) + 20;
-    const randomY = Math.random() * (maxY - 20) + 20;
-    
-    btnNo.style.left = `${randomX}px`;
-    btnNo.style.top = `${randomY}px`;
+    const newX = Math.random() * (maxX - 20) + 20;
+    const newY = Math.random() * (maxY - 20) + 20;
+    btnNo.style.left = `${newX}px`;
+    btnNo.style.top = `${newY}px`;
+}
+
+// На ПК тікає від мишки
+btnNo.addEventListener('mouseenter', moveBtn);
+
+// На Телефоні (і ПК) тікає при кліку
+btnNo.addEventListener('click', (e) => {
+    e.preventDefault();
+    moveBtn();
 });
 
-// 3. Клік по "Так"
+// Страховка для тачскрінів
+btnNo.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    moveBtn();
+}, { passive: false });
+
+
+// --- 3. КНОПКА "ТАК" (ПЕРЕХІД НА 2 СТОРІНКУ) ---
 btnYes.addEventListener('click', () => {
-    alert("Ура! Далі буде друга сторінка...");
+    // Ховаємо питання
+    document.getElementById('page1').classList.add('hidden');
+    // Показуємо книги
+    document.getElementById('page2').classList.remove('hidden');
+
+    // Салют!
+    if (typeof confetti === "function") {
+        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+    }
 });
 
-// 4. Клік по "Ні"
-btnNo.addEventListener('click', () => {
-    alert("хохли в край паахуевалі");
-});
 
+// --- 4. ЛОГІКА КНИГ ---
+
+// Відкрити книгу
+function openBook(id) {
+    document.getElementById('page2').classList.add('hidden');
+    document.getElementById(`book-content-${id}`).classList.remove('hidden');
+}
+
+// Закрити книгу
+function closeBook(id) {
+    document.getElementById(`book-content-${id}`).classList.add('hidden');
+    document.getElementById('page2').classList.remove('hidden');
+}
+
+// Активація купона
+function activateCoupon() {
+    const btn = document.getElementById('activate-btn');
+    btn.textContent = "✨ АКТИВОВАНО! ✨";
+    btn.style.background = "#ccc";
+    btn.disabled = true;
+    
+    if (typeof confetti === "function") {
+        confetti({ particleCount: 100, spread: 60, origin: { y: 0.7 } });
+    }
+    
+    alert("Купон активовано! Чекай на виконання бажання 😏");
+}
