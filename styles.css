@@ -281,12 +281,7 @@ button {
 /* ===== Mobile tweaks ===== */
 @media (max-width: 520px) {
 
-  body {
-    align-items: flex-start;   /* щоб картка не впиралась в низ */
-    padding: 18px 12px;
-    height: auto;
-    min-height: 100vh;
-  }
+
 
   .card {
     width: 100%;
@@ -336,5 +331,6 @@ button {
     margin-top: 10px;
   }
 }
+
 
 
